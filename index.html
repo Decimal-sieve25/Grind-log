@@ -7,7 +7,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Weekly Split">
-<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%232563eb'/><path d='M25 35h8v30h-8zM17 40h6v20h-6zM67 35h8v30h-8zM77 40h6v20h-6zM31 46h38v8H31z' fill='%23ffffff'/></svg>">
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%232563eb'/><g fill='%23ffffff'><rect x='32' y='45' width='36' height='10' rx='3'/><rect x='22' y='34' width='10' height='32' rx='3'/><rect x='14' y='39' width='8' height='22' rx='2'/><rect x='68' y='34' width='10' height='32' rx='3'/><rect x='78' y='39' width='8' height='22' rx='2'/></g></svg>">
 <title>Weekly Split</title>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
@@ -24,20 +24,23 @@
     --accent-dim: rgba(37, 99, 235, 0.25);
     --sage: #10b981;
     --danger: #ef4444;
-    box-sizing: border-box;
-    padding-top: env(safe-area-inset-top, 0px);
-    padding-bottom: env(safe-area-inset-bottom, 0px);
   }
-  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
-  * { box-sizing: border-box; }
-  html, body {
+  html {
     height: 100%;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-padding-top: env(safe-area-inset-top, 0px);
+  }
+  * { box-sizing: border-box; }
+  body {
+    min-height: 100%;
     margin: 0;
     background: var(--bg);
     color: var(--text);
     font-family: 'Inter', sans-serif;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
   }
   h1, h2, h3, .display {
     font-family: 'Oswald', sans-serif;
@@ -45,15 +48,18 @@
     letter-spacing: 0.02em;
     line-height: 1.15;
   }
-  header {
-    padding: 16px 18px 0;
-    background: rgba(11, 15, 25, 0.85);
+  .sticky-header-wrap {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: rgba(11, 15, 25, 0.9);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    position: sticky;
-    top: env(safe-area-inset-top, 0px);
-    z-index: 10;
     border-bottom: 1px solid var(--line);
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+  header {
+    padding: 16px 18px 8px;
   }
   .head-row {
     display: flex;
@@ -61,7 +67,7 @@
     align-items: center;
     flex-wrap: wrap;
     gap: 12px;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
   }
   header h1 {
     font-size: 22px;
@@ -105,18 +111,12 @@
     display: flex;
     overflow-x: auto;
     gap: 6px;
-    padding: 0 18px;
-    background: rgba(11, 15, 25, 0.85);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--line);
-    position: sticky;
-    z-index: 9;
+    padding: 0 18px 10px;
   }
   nav::-webkit-scrollbar { display: none; }
   .tab {
     flex: 0 0 auto;
-    padding: 10px 14px 12px;
+    padding: 8px 14px;
     font-family: 'Oswald', sans-serif;
     font-size: 13px;
     letter-spacing: 0.03em;
@@ -138,8 +138,7 @@
     padding: 18px;
     max-width: 640px;
     margin: 0 auto;
-    padding-bottom: 100px;
-    will-change: transform, opacity;
+    padding-bottom: 120px;
   }
 
   /* Sliding Transitions */
@@ -299,7 +298,7 @@
     position: fixed;
     inset: 0;
     z-index: 50;
-    background: rgba(11, 15, 25, 0.9);
+    background: rgba(11, 15, 25, 0.92);
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
     display: flex;
@@ -644,20 +643,21 @@
 </head>
 <body>
 
-<header id="siteHeader">
-  <div class="head-row">
-    <div>
-      <h1>Weekly Split</h1>
-      <p id="dateLine"></p>
+<div class="sticky-header-wrap">
+  <header id="siteHeader">
+    <div class="head-row">
+      <div>
+        <h1>Weekly Split</h1>
+        <p id="dateLine"></p>
+      </div>
+      <div class="view-toggle">
+        <button id="toggleWorkout" class="active">Workout</button>
+        <button id="toggleProgress">Progress</button>
+      </div>
     </div>
-    <div class="view-toggle">
-      <button id="toggleWorkout" class="active">Workout</button>
-      <button id="toggleProgress">Progress</button>
-    </div>
-  </div>
-</header>
-
-<nav id="tabs"></nav>
+  </header>
+  <nav id="tabs"></nav>
+</div>
 
 <main id="main"></main>
 
@@ -737,18 +737,6 @@ if (!settings.bodyweightLbs) settings.bodyweightLbs = 160;
 
 function saveHistory() { try { localStorage.setItem("splitHistory", JSON.stringify(history)); } catch(e) {} }
 function saveSettings() { try { localStorage.setItem("splitSettings", JSON.stringify(settings)); } catch(e) {} }
-
-function updateStickyOffsets() {
-  const header = document.getElementById("siteHeader");
-  const nav = document.getElementById("tabs");
-  if (header && nav) {
-    const hHeight = header.offsetHeight;
-    const safeTop = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--safe-area-inset-top')) || 0;
-    nav.style.top = (hHeight + safeTop - 1) + "px";
-  }
-}
-window.addEventListener("load", updateStickyOffsets);
-window.addEventListener("resize", updateStickyOffsets);
 
 const TAB_SEQUENCE = ["mon", "tue", "wed", "thu", "fri", "sun", "progress"];
 function getCurrentTabIndex() {
@@ -1083,7 +1071,7 @@ function filterByRange(entries, range) {
 
 function renderTabs() {
   const nav = document.getElementById("tabs");
-  if (currentView !== "workout") { nav.style.display = "none"; updateStickyOffsets(); return; }
+  if (currentView !== "workout") { nav.style.display = "none"; return; }
   nav.style.display = "flex";
   nav.innerHTML = "";
   DAY_ORDER.forEach(key => {
@@ -1100,7 +1088,6 @@ function renderTabs() {
     };
     nav.appendChild(btn);
   });
-  updateStickyOffsets();
 }
 
 function triggerSlideTransition(action) {
@@ -1514,7 +1501,6 @@ function drawProgressChart() {
 function renderMain() {
   if (currentView === "workout") renderWorkoutView();
   else renderProgressView();
-  updateStickyOffsets();
 }
 
 document.getElementById("toggleWorkout").onclick = () => {
