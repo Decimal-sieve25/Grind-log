@@ -7,7 +7,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Weekly Split">
-<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAAC9ElEQVR4nO3dvW3bUBhAUTvIAm6CFMkKXsETpMsoqVOk9ijuMkFW8AoeICukUCM4vgT1KFI0dE5n2BCpjxdPP6bE20+fv9zAWz5cegfYL3GQxEESB0kcJHGQxEESB0kcJHGQxEESB0kcJHGQxEESB0kcJHGQxEESB0kcJHGQxEESB0kcJHGQxEESB0kcJHGQxEESB0kcJHGQPm6zmd+/7utX334+b7MP79Fl53a79nVlJ+7eMYm8soe5rfuwMvMenvSX12Anc1sxjlP3Wx8H+5nvWnGM7bE+djU3r1ZIq8SxJORrXjz2NjcrB0kcJHGQvMe6Y/vX49/fHx6WX6bjDnvsVj0DumrXTn2cH83fLNX+27pkieVf57/1q+GExl/WJko42ZyXzm76WlPH6kJg3HM2Z4+tjFnzmN9eEJKGoljfoYWj7XNn/DA4mHlIImDJA6SOEjiIImDJA6SOEjiIImDJA6SOEgfgVb2JNd8AvquWDlI4iCJgyQOkjhI4iCJgyQOkjhI4iCJgyQOkjhI4iDt8V/2vp9jJ6wcJHGQxEESB0kcJHGQxEESB0kcJHGQxEESB2kkjvlftL7k6/GZY/6EB74e3shBGoxjTeYaWjW3MmfPYVTXGV47p7SljS9PTvsD1Vg5b/X/Dj08vytjew/3dm8diycWaznAmmOt27cd5j4UnpCRxkMRBWiWOJaePX+2p5zf7m5uVg7RWHGMhX/OycbCrua24cpy6x8o42M/c1n1Yml/fyji2k7ktulz5fBMf9JPFhMvObaM4eI+8WiGJgyQOkjhI4iCJgyQOkjhI4iCJgyQOkjhI4iCJgyQOkjhI4iCJgyQOkjhI4iCJgyQOkjhI4iCJgyQOkjhI4iCJgyQOkjhI4iCJgyQOkjhI4iD9Ay3XjhehhvgIAAAAAElFTkSuQmCC">
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%232563eb'/><path d='M25 35h8v30h-8zM17 40h6v20h-6zM67 35h8v30h-8zM77 40h6v20h-6zM31 46h38v8H31z' fill='%23ffffff'/></svg>">
 <title>Weekly Split</title>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
@@ -738,7 +738,6 @@ if (!settings.bodyweightLbs) settings.bodyweightLbs = 160;
 function saveHistory() { try { localStorage.setItem("splitHistory", JSON.stringify(history)); } catch(e) {} }
 function saveSettings() { try { localStorage.setItem("splitSettings", JSON.stringify(settings)); } catch(e) {} }
 
-// Dynamic dynamic sticky offset calculation to prevent overlap
 function updateStickyOffsets() {
   const header = document.getElementById("siteHeader");
   const nav = document.getElementById("tabs");
